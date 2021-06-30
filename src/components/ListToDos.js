@@ -1,32 +1,20 @@
 import ToDo from "./ToDo";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TodoListContext } from "../context/ToDoList.context";
 
-const ListToDos = ({ toDoList, removetodo, editToDo, saveChanges }) => {
-  const [edit, setEdit] = useState(false);
-  const [myToDo, setMyToDo] = useState("");
-
+const ListToDos = () => {
+  const [toDoList, setTodoList] = useContext(TodoListContext);
   return (
     <div>
+      <h2 className="mt-6 mb-4 text-center text-3xl font-extrabold text-gray-900">
+        To Do List
+      </h2>
       {toDoList.map((toDo) => {
         return (
           <div key={toDo} className="">
-            {edit ? (
-              <div>
-                <input
-                  type="text"
-                  value={toDo}
-                  onChange={() => setMyToDo(toDo)}
-                />
-              </div>
-            ) : (
-              <div className="py-1">
-                <ToDo
-                  toDo={toDo}
-                  saveChanges={saveChanges}
-                  removetodo={removetodo}
-                />
-              </div>
-            )}
+            <div className="py-1">
+              <ToDo toDo={toDo} />
+            </div>
           </div>
         );
       })}

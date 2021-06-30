@@ -1,12 +1,21 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { TodoListContext } from "../context/ToDoList.context";
 import { XIcon } from "@heroicons/react/solid";
 
-const ToDo = ({ toDo, saveChanges, removetodo }) => {
+const ToDo = ({ toDo }) => {
+  const [toDoList, setTodoList] = useContext(TodoListContext);
   const [edit, setEdit] = useState(false);
   const [myToDo, setMyToDo] = useState(toDo);
 
-  const handelChange = (e) => {
-    setMyToDo(e.target.value);
+  const removetodo = () => {
+    setTodoList(toDoList.filter((item) => item !== toDo));
+  };
+
+  const saveChanges = (toDo, newTodo) => {
+    let index = toDoList.indexOf(toDo);
+    const newTodos = [...toDoList];
+    newTodos.splice(index, 1, newTodo);
+    setTodoList(newTodos);
   };
 
   return (
@@ -20,7 +29,7 @@ const ToDo = ({ toDo, saveChanges, removetodo }) => {
                 type="text"
                 id={myToDo}
                 value={myToDo}
-                onChange={(e) => handelChange(e)}
+                onChange={(e) => setMyToDo(e.target.value)}
               />
               <div className="flex">
                 <button
@@ -71,7 +80,7 @@ const ToDo = ({ toDo, saveChanges, removetodo }) => {
                 </button>
                 <button
                   className="-mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2"
-                  onClick={() => removetodo(toDo)}
+                  onClick={removetodo}
                 >
                   <span className="sr-only">Dismiss</span>
                   <XIcon className="h-6 w-6 text-white" aria-hidden="true" />
