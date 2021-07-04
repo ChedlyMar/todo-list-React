@@ -1,22 +1,19 @@
-import { useContext, useState } from "react";
-import { TodoListContext } from "../context/ToDoList.context";
+import { useState } from "react";
 import { XIcon } from "@heroicons/react/solid";
 
+// REDUX
+import { useDispatch } from "react-redux";
+import { bindActionCreators } from "redux";
+import { actionCreator } from "../state/index";
+
 const ToDo = ({ toDo }) => {
-  const [toDoList, setTodoList] = useContext(TodoListContext);
   const [edit, setEdit] = useState(false);
-  const [myToDo, setMyToDo] = useState(toDo);
+  const [myToDo, setMyToDo] = useState(toDo.description);
+  const [done, setDone] = useState(toDo.isDone);
 
-  const removetodo = () => {
-    setTodoList(toDoList.filter((item) => item !== toDo));
-  };
-
-  const saveChanges = (toDo, newTodo) => {
-    let index = toDoList.indexOf(toDo);
-    const newTodos = [...toDoList];
-    newTodos.splice(index, 1, newTodo);
-    setTodoList(newTodos);
-  };
+  // REDUX
+  const dispatch = useDispatch();
+  const { deleteTask, editTask } = bindActionCreators(actionCreator, dispatch);
 
   return (
     <div>
@@ -35,7 +32,7 @@ const ToDo = ({ toDo }) => {
                 <button
                   className="flex  justify-center mx-2 px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-indigo-600 bg-white hover:bg-indigo-50"
                   onClick={() => {
-                    saveChanges(toDo, myToDo);
+                    editTask(toDo, myToDo, done);
                     setEdit(!edit);
                   }}
                 >
@@ -62,13 +59,14 @@ const ToDo = ({ toDo }) => {
                 <input
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                  id={toDo}
+                  id={toDo.id}
+                  onChange={(e) => editTask(toDo, myToDo, e.target.checked)}
                 />
                 <label
                   className="ml-3 font-medium text-white truncate"
-                  htmlFor={toDo}
+                  htmlFor={toDo.id}
                 >
-                  {toDo}
+                  {toDo.description}
                 </label>
               </div>
               <div className="flex ">
@@ -80,7 +78,9 @@ const ToDo = ({ toDo }) => {
                 </button>
                 <button
                   className="-mr-1 flex p-2 rounded-md hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-white sm:-mr-2"
-                  onClick={removetodo}
+                  onClick={() => {
+                    deleteTask(toDo.id);
+                  }}
                 >
                   <span className="sr-only">Dismiss</span>
                   <XIcon className="h-6 w-6 text-white" aria-hidden="true" />

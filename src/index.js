@@ -3,13 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { TodoListProvider } from "./context/ToDoList.context";
+import { Provider } from "react-redux";
+import { store } from "./state/Store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <TodoListProvider>
+    <Provider store={store}>
       <App />
-    </TodoListProvider>
+    </Provider>
   </React.StrictMode>,
   document.getElementById("root")
 );

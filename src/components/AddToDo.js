@@ -1,13 +1,16 @@
-import { useContext, useState } from "react";
-import { TodoListContext } from "../context/ToDoList.context";
+import { useState } from "react";
+
+// REDUX
+import { bindActionCreators } from "redux";
+import { useDispatch } from "react-redux";
+import { actionCreator } from "../state/index";
 
 const AddToDo = () => {
   const [newTodo, setNewTodo] = useState("");
-  const [toDoList, setTodoList] = useContext(TodoListContext);
 
-  const addToDo = () => {
-    setTodoList(() => [...toDoList, newTodo]);
-  };
+  // REDUXS
+  const dispatch = useDispatch();
+  const { addTask } = bindActionCreators(actionCreator, dispatch);
 
   return (
     <div>
@@ -22,7 +25,7 @@ const AddToDo = () => {
       ></input>
       <button
         className="group relative flex justify-center m-auto w-1/3 py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        onClick={addToDo}
+        onClick={() => addTask(newTodo)}
       >
         Add ToDo
       </button>

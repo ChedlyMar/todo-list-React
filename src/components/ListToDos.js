@@ -1,9 +1,9 @@
 import ToDo from "./ToDo";
-import { useContext, useState } from "react";
-import { TodoListContext } from "../context/ToDoList.context";
+import { useSelector } from "react-redux";
 
 const ListToDos = () => {
-  const [toDoList, setTodoList] = useContext(TodoListContext);
+  const toDoList = useSelector((state) => state.tasks);
+
   return (
     <div>
       <h2 className="mt-6 mb-4 text-center text-3xl font-extrabold text-gray-900">
@@ -11,7 +11,7 @@ const ListToDos = () => {
       </h2>
       {toDoList.map((toDo) => {
         return (
-          <div key={toDo} className="">
+          <div key={toDo.id} className="">
             <div className="py-1">
               <ToDo toDo={toDo} />
             </div>
