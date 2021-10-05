@@ -9,17 +9,20 @@ const ListToDos = () => {
   return (
     <div>
       <div>
-        <button className="" onClick={() => setFiltredList(toDoList)}>
+        <button 
+    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-2" 
+          onClick={() => setFiltredList(toDoList)}>
           All
         </button>
         <button
+  className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 mt-2"
           onClick={() =>
             setFiltredList(toDoList.filter((todo) => todo.isDone === true))
           }
         >
           Done
         </button>
-        <button
+        <button   className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2 mt-2"
           onClick={() =>
             setFiltredList(toDoList.filter((todo) => todo.isDone === false))
           }
