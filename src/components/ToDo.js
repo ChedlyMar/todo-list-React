@@ -57,6 +57,7 @@ const ToDo = ({ toDo }) => {
             <div className="flex items-center justify-between flex-wrap">
               <div className="w-0 flex-1 flex items-center">
                 <input
+                  checked={toDo.isDone}
                   type="checkbox"
                   className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
                   id={toDo.id}
